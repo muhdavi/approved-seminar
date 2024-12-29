@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Pogram Studi TRKJ Jurusan TIK - Politeknik Negeri Lhokseumawe</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.bootstrap4.min.css">
+
+    <style type="text/css">
+        .dataTables_info {
+            display: none;
+        }
+
+        .dataTables_filter {
+            float: right;
+        }
+
+        .w-tanggal {
+            width: 80px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .prodi {
+                font-size: .8rem;
+            }
+            .w-tanggal {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid p-2">
+    <header class="pb-3 mb-3 border-bottom">
+        <div id="logo" class="d-none d-md-block d-lg-block">
+            <a href="#">
+                <img src="img/logo.png" alt="PNL" class="w-25">
+            </a>
+        </div>
+        <div class="fs-4 font-weight-bold prodi">Pogram Studi Teknologi Rekayasa Komputer Jaringan</div>
+        <div class="fs-4 font-weight-bold">Jurusan Teknologi Informasi dan Kompuer</div>
+    </header>
+
+    <table id="daftar" class="table table-striped table-responsive-sm" style="width:100%">
+        <thead class="thead-dark">
+        <tr>
+            <th class="w-tanggal">Tanggal</th>
+            <th>Sesi</th>
+            <th>Ruang</th>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>DPU</th>
+            <th>DPP</th>
+            <th>Ketua</th>
+            <th>Sekretaris</th>
+            <th>Pembahas 1</th>
+            <th>Pembahas 2</th>
+            <!--
+            <th>Penguji 1</th>
+            <th>Penguji 2</th>
+            <th>Penguji 3</th>
+            -->
+        </tr>
+        </thead>
+        <tfoot class="thead-dark">
+        <tr>
+            <th class="w-tanggal">Tanggal</th>
+            <th>Sesi</th>
+            <th>Ruang</th>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>DPU</th>
+            <th>DPP</th>
+            <th>Ketua</th>
+            <th>Sekretaris</th>
+            <th>Pembahas 1</th>
+            <th>Pembahas 2</th>
+            <!--
+            <th>Penguji 1</th>
+            <th>Penguji 2</th>
+            <th>Penguji 3</th>
+            -->
+        </tr>
+        </tfoot>
+    </table>
+    <strong>Keterangan:</strong> <br>
+    <!-- Proposal -->
+    <strong>Sesi</strong> <br>
+    Sesi 1 = 08.00 - 08.50 <br>
+    Sesi 2 = 09.00 - 09.50 <br>
+    Sesi 3 = 10.00 - 10.50 <br>
+    Sesi 4 = 11.00 - 11.50 <br>
+    Istirahat <br>
+    Sesi 5 = 14.00 - 14.50 <br>
+    Sesi 6 = 15.00 - 15.50 <br>
+    
+    <!-- Skripsi 
+    <strong>Sesi</strong> <br>
+    Sesi 1 = 08.00 - 10.00 <br>
+    Sesi 2 = 10.20 - 12.20 <br>
+    Istirahat <br>
+    Sesi 3 = 13.30 - 15.30 <br>
+    Sesi 4 = 15.50 - 17.50 <br>
+    -->
+    <strong>Ruangan</strong> <br>
+    TIK.300A = Ruang Rapat <br>
+    TIK.300B = Ruang Seminar
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.colVis.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#daftar').DataTable({
+            ajax: 'https://siperi.muhdavi.com/api/approved-seminar',
+            deferRender: true,      // jika data banyak yang diload sesuia kebutuhan
+            processing: true,
+            columns: [
+                { data: 'tanggal' },
+                { data: 'sesi.id' },
+                { data: 'ruangan.kode_ruangan' },
+                { data: 'mahasiswa.nim' },
+                { data: 'mahasiswa.nama_mahasiswa' },
+                { data: 'dpu.nama_lengkap' },
+                { data: 'dpp.nama_lengkap' },
+                { data: 'ketua.nama_lengkap' },
+                { data: 'sekretaris.nama_lengkap' },
+                { data: 'pembahas_1.nama_lengkap' },                
+                { data: 'pembahas_2.nama_lengkap' },
+            ],
+            lengthChange: false,
+            dom: 'Bfrtip',
+            scrollY: '400px',
+            scrollCollapse: true,
+            paging: false,
+            buttons: [
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed columns',
+                    collectionTitle: 'Pilih kolom header/footer'
+                }
+            ]
+        });
+    });
+</script>
+</body>
+
+</html>
